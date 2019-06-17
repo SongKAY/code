@@ -1,3 +1,4 @@
+//初始化的时候一定不要图省事, 全都为0
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
