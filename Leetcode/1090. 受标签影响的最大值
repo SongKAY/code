@@ -1,0 +1,37 @@
+\\注意边界的处理, 容易造成溢出
+class Solution {
+public:
+    static bool cmp(int a,int b){
+        return a>b;
+    }
+    int largestValsFromLabels(vector<int>& values, vector<int>& labels, int num_wanted, int use_limit) {
+        map<int,vector<int>> m;
+        set<int> s;
+        for(int i=0;i<values.size();i++){
+            m[labels[i]].push_back(values[i]);
+            s.insert(labels[i]);
+        }
+        for(auto i:s){
+            sort(m[i].begin(),m[i].end(),cmp);
+        }
+        vector<int> result;
+        int sum = 0;
+        for(auto i:s){
+            for(int j=0;j<use_limit;j++)
+                if(j<m[i].size())
+                    result.push_back(m[i][j]);
+                else
+                    break;
+        }
+        for(int i=0;i<result.size();i++)
+            cout<<result[i]<<' ';
+        cout<<endl;
+        sort(result.begin(),result.end(),cmp);
+        for(int i=0;i<num_wanted;i++){
+            if(i>=result.size())
+                break;
+            sum += result[i];
+        }
+        return sum;
+    }
+};
