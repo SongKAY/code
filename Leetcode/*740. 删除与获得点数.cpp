@@ -1,3 +1,4 @@
+\\不用考虑是否出现过
 class Solution {
 public:
     int deleteAndEarn(vector<int>& nums) {
