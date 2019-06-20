@@ -1,3 +1,4 @@
+\\只要第二天比第一天高就出售 贪心
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
