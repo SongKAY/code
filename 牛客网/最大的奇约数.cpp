@@ -1,3 +1,4 @@
+/*递推 奇数是本身 偶数是不断/2后得到的奇数 注意2n和n的最大奇约数一样*/
 #include <iostream>
 using namespace std;
  
