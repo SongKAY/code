@@ -1,3 +1,4 @@
+/*注意考虑多种情况*/
 #include <iostream>
 #include <string>
 #include <algorithm>
