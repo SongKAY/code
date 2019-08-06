@@ -29,8 +29,8 @@ int main(){
         if(m[a]<=(a+1))
             result += (a+1);
         else{
-            int tempn = m[a] / (a==0?1:a);
-            int tempm = m[a] % (a==0?1:a);
+            int tempn = m[a] / (a+1);
+            int tempm =(m[a]%(a+1))==0?0:1;
             result += (tempn+tempm) * (a+1);
         }
     }
