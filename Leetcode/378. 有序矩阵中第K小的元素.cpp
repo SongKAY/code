@@ -4,11 +4,11 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
         int l = matrix[0][0];
-        int r = matrix[n-1][m-1] + 1;
+        int r = matrix[n-1][m-1];
         while(l<r){
             int mid = l + (r-l)/2;
-            int j = m-1;
             int cnt = 0;
+            int j = m-1;
             for(int i=0;i<n;i++){
                 while(j>=0&&matrix[i][j]>mid)
                     j--;
