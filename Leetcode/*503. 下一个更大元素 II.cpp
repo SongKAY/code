@@ -1,17 +1,19 @@
 class Solution {
 public:
     vector<int> nextGreaterElements(vector<int>& nums) {
-        stack<int> s;
         int n = nums.size();
-        vector<int> ans(n,-1);
+        vector<int> result(n,-1);
+        if(n==0)
+            return result;
+        stack<pair<int,int>> s;
+        s.push(make_pair(nums[0],0));
         for(int i=0;i<2*n;i++){
-            while(!s.empty()&&nums[i%n]>nums[s.top()]){
-                ans[s.top()] = nums[i%n];
+            while(!s.empty()&&s.top().first<nums[i%n]){
+                result[s.top().second] = nums[i%n];
                 s.pop();
             }
-            if(i<n)
-                s.push(i);
+            s.push(make_pair(nums[i%n],i%n));
         }
-        return ans;
+        return result;
     }
 };
