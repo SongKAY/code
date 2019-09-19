@@ -1,37 +1,29 @@
 class Solution {
 public:
-    bool check(int t,int N,int temp,vector<int> &color,vector<int> m[10001]){
-        vector<int> node = m[t];
-        if(node.empty()){
+    bool check(int t,int color,vector<int> &edge,vector<int> &temp){
+        if(edge.empty())
             return true;
-        }
-        for(int i=0;i<node.size();i++){
-            if(color[node[i]-1]==temp)
+        for(auto a:edge){
+            if(temp[a]==color)
                 return false;
         }
         return true;
     }
-
     vector<int> gardenNoAdj(int N, vector<vector<int>>& paths) {
-        vector<int> color(N,0);
-        if(N==0)
-            return color;
-        vector<int> m[10001];
-        for(int i=0;i<paths.size();i++){
-            int x = paths[i][0];
-            int y = paths[i][1];
-            m[x].push_back(y);
-            m[y].push_back(x);
+        map<int,vector<int>> m;
+        for(auto i:paths){
+            m[i[0]-1].push_back(i[1]-1);
+            m[i[1]-1].push_back(i[0]-1);
         }
-        color[0] = 1;
-        for(int i=2;i<=N;i++){
+        vector<int> temp(N,0);
+        for(int i=0;i<N;i++){
             for(int j=1;j<=4;j++){
-                if(check(i,N,j,color,m)){
-                    color[i-1] = j;
+                if(check(i,j,m[i],temp)){
+                    temp[i] = j;
                     break;
                 }
             }
         }
-        return color;
+        return temp;
     }
 };
