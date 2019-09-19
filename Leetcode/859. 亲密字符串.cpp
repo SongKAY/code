@@ -4,28 +4,27 @@ public:
         if(A.length()!=B.length())
             return false;
         int cnt = 0;
-        vector<vector<int>> temp;
+        int pre;
+        map<char,int> m;
+        int flag = 0;
         for(int i=0;i<A.length();i++){
+            m[A[i]] ++;
+            if(m[A[i]]>=2)
+                flag = 1;
             if(A[i]!=B[i]){
                 cnt ++;
-                temp.push_back({A[i],B[i]});
+                if(cnt>2)
+                    return false;
+                if(cnt==1)
+                    pre = i;
+                if(cnt==2){
+                    if(A[pre]!=B[i]||B[pre]!=A[i])
+                        return false;
+                }
             }
-            if(cnt>2)
-                return false;
         }
-        if(cnt==1)
+        if(cnt==0&&!flag)
             return false;
-        if(cnt==0){
-            map<char,int> m;
-            for(int i=0;i<A[i];i++){
-                m[A[i]]++;
-                if(m[A[i]]>=2)
-                    return true;
-            }
-            return false;
-        }
-        if((temp[0][0]==temp[1][1]&&temp[0][1]==temp[1][0]))
-            return true;
-        return false;
+        return true;
     }
 };
