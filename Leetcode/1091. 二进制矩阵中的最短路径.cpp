@@ -1,35 +1,46 @@
 class Solution {
 public:
-    int bfs(int x,int y,vector<vector<int>>& grid,vector<vector<int>>& flag){
-        queue<pair<vector<int>,int>> q;
+    struct node{
+        int x;
+        int y;
+        int step=0;
+        node(int dx,int dy,int s){
+            x = dx;
+            y = dy;
+            step = s;
+        }
+    };
+    int bfs(vector<vector<int>> grid,vector<vector<int>> visit){
         int n = grid.size();
-        q.push(make_pair(vector<int>{x,y},1));
+        if(grid[0][0])
+            return -1;
+        queue<node> q;
+        node a(0,0,1);
+        q.push(a);
+        visit[0][0] = 1;
         int dir[8][2] = {1,0,0,1,-1,0,0,-1,1,1,-1,-1,1,-1,-1,1};
         while(!q.empty()){
-            int tx = q.front().first[0];
-            int ty = q.front().first[1];
-            int step = q.front().second;
+            node t = q.front();
             q.pop();
-            if(tx==n-1&&ty==n-1)
-                return step;
+            if(t.x==n-1&&t.y==n-1)
+                return t.step;
             for(int i=0;i<8;i++){
-                int dx = tx + dir[i][0];
-                int dy = ty + dir[i][1];
-                if(dx<0||dx>=n||dy<0||dy>=n||flag[dx][dy]||grid[dx][dy])
+                int dx = t.x + dir[i][0];
+                int dy = t.y + dir[i][1];
+                if(dx<0||dy<0||dx>=n||dy>=n)
                     continue;
-                flag[dx][dy] = 1;
-                q.push(make_pair(vector<int>{dx,dy},step+1));
+                if(grid[dx][dy]||visit[dx][dy])
+                    continue;
+                visit[dx][dy] = 1;
+                node s(dx,dy,t.step+1);
+                q.push(s);
             }
         }
         return -1;
     }
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        int n = grid.size();
-        vector<vector<int>> flag(n,vector<int>(n,0));
-        if(grid[0][0]!=0||grid[n-1][n-1]!=0)
-            return -1;
-        flag[0][0] = 1;
-        return bfs(0,0,grid,flag);
-        
+        int n =grid.size();
+        vector<vector<int>> visit(n,vector<int>(n,0));
+        return bfs(grid,visit);
     }
 };
