@@ -1,23 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> result;
-    void dfs(int k, int t,int n,int sum,vector<int> temp){
-        if(temp.size()>t)
-            return;
-        if(k==10){
-            if(temp.size()==t&&sum==n){
+    void dfs(int pre,int k,int n,int sum,vector<int>temp){
+        if(!k){
+            if(sum==n)
                 result.push_back(temp);
-            }
             return;
         }
-        dfs(k+1,t,n,sum,temp);
-        temp.push_back(k);
-        dfs(k+1,t,n,sum+k,temp);
-        temp.pop_back();
+        for(int i=pre+1;i<=9;i++){
+            if(sum+i>n)
+                break;
+            temp.push_back(i);
+            dfs(i,k-1,n,sum+i,temp);
+            temp.pop_back();
+        }
     }
     vector<vector<int>> combinationSum3(int k, int n) {
         vector<int> temp;
-        dfs(1,k,n,0,temp);
+        dfs(0,k,n,0,temp);
         return result;
     }
 };
