@@ -8,38 +8,33 @@
  */
 class Solution {
 public:
-    void swap(ListNode *a, ListNode* b){
-        int temp = a->val;
-        a->val = b->val;
-        b->val = temp;
+    void swap(ListNode *p,ListNode *q){
+        int temp = p->val;
+        p->val = q->val;
+        q->val = temp;
     }
-    ListNode* partition(ListNode *head,ListNode *tail){
-        int pivol = head->val;
-        ListNode *cur = head->next;
+    void quickSort(ListNode *head,ListNode *tail){
+        if(head==tail)
+            return;
         ListNode *s = head;
+        ListNode *cur = head;
+        int pivol = head->val;
         while(cur!=NULL&&cur!=tail){
             if(cur->val<pivol){
-                s=s->next;
-                swap(s,cur);
+                s = s->next;
+                swap(cur,s);
             }
-            cur=cur->next;
+            cur = cur->next;
         }
-        swap(head,s);
-        return s;
-    }
-    
-    void quicksort(ListNode *head, ListNode* tail){
-        if(head==tail||head->next==NULL){
-            return;
-        }
-        ListNode *mid = partition(head,tail);
-        quicksort(head,mid);
-        quicksort(mid->next,tail);
+        swap(s,head);
+        quickSort(head,s);
+        quickSort(s->next,tail);
     }
     ListNode* sortList(ListNode* head) {
-        if(head==NULL)
+        if(head==NULL||head->next==NULL)
             return head;
-        quicksort(head,NULL);
+        quickSort(head,NULL);
         return head;
+
     }
 };
