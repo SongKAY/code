@@ -20,25 +20,20 @@ public:
     TreeNode* sortedListToBST(ListNode* head) {
         if(head==NULL)
             return NULL;
-        if(head->next==NULL){
-            TreeNode *root = new TreeNode(head->val);
-            return root;
-        }
-        ListNode *fast = head;
         ListNode *slow = head;
-        ListNode *pre = head;
+        ListNode *fast = head;
+        ListNode *pre = NULL;
         while(fast!=NULL&&fast->next!=NULL){
-            fast = fast->next->next;
+            pre = slow;
             slow = slow->next;
+            fast = fast->next->next;
         }
-        while(pre->next!=slow)
-            pre = pre->next;
-        TreeNode *root = new TreeNode(slow->val);
-        ListNode *newhead = slow->next;
-        pre->next = NULL;
-        root->left = sortedListToBST(head);
-        root->right = sortedListToBST(newhead);
+        TreeNode* root = new TreeNode(slow->val);
+        if(pre){
+            pre->next = NULL;
+            root->left = sortedListToBST(head);
+            root->right = sortedListToBST(slow->next);
+        }
         return root;
     }
 };
-
