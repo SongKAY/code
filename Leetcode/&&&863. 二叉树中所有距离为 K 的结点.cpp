@@ -11,17 +11,18 @@ class Solution {
 public:
     vector<int> result;
     unordered_map<int,TreeNode*> father;
-    void getfather(TreeNode* root){
+    void construct(TreeNode* root){
+        if(root==NULL)
+            return;
         if(root->left){
             father[root->left->val] = root;
-            getfather(root->left);
+            construct(root->left);
         }
         if(root->right){
             father[root->right->val] = root;
-            getfather(root->right);
+            construct(root->right);
         }
     }
-    
     void getans(int t,int K,TreeNode* root,vector<int>&visit){
         if(t==K){
             result.push_back(root->val);
@@ -41,11 +42,9 @@ public:
         }
     }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
-        if(root==NULL)
-            return result;
         vector<int> visit(501,0);
-        getfather(root);
-        visit[target->val] = 1;
+        construct(root);
+        visit[target->val]=1;
         getans(0,K,target,visit);
         return result;
     }
