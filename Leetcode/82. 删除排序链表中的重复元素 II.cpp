@@ -11,20 +11,22 @@ public:
     ListNode* deleteDuplicates(ListNode* head) {
         if(head==NULL||head->next==NULL)
             return head;
-        ListNode *pre = new ListNode(-1);
-        ListNode *dummy = pre;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* pre = dummy;
         pre->next = head;
         ListNode *cur = head;
         while(cur!=NULL&&cur->next!=NULL){
-            if(cur->val==cur->next->val){
-                while(cur->next!=NULL&&cur->val==cur->next->val)
-                    cur = cur->next;
-                pre->next = cur->next;
+            if(cur->val!=cur->next->val){
+                pre->next = cur;
+                pre = cur;
                 cur = cur->next;
             }
             else{
-                pre = cur;
+                while(cur!=NULL&&cur->next!=NULL&&cur->val==cur->next->val){
+                    cur = cur->next;
+                }
                 cur = cur->next;
+                pre->next = cur;
             }
         }
         return dummy->next;
