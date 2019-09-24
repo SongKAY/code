@@ -4,18 +4,19 @@ public:
         if(s.empty())
             return 0;
         stack<int> q;
-        char pre = '+';
+        int result = 0;
+        char sign = '+';
         int temp = 0;
         for(int i=0;i<s.length();i++){
             if(s[i]>='0'&&s[i]<='9'){
-                temp = temp*10 + (s[i] - '0');
+                temp = temp*10 + (s[i]-'0');
             }
-            if((s[i] < '0' && s[i] != ' ') ||i==s.length()-1){
-                if(pre=='+')
+            if(s[i]<'0'&&s[i]!=' '||i==s.length()-1){
+                if(sign=='+')
                     q.push(temp);
-                else if(pre=='-')
+                else if(sign=='-')
                     q.push(-temp);
-                else if(pre=='*'){
+                else if(sign=='*'){
                     int t = q.top();
                     q.pop();
                     q.push(temp*t);
@@ -25,11 +26,10 @@ public:
                     q.pop();
                     q.push(t/temp);
                 }
+                sign = s[i];
                 temp = 0;
-                pre = s[i];
             }
         }
-        int result = 0;
         while(!q.empty()){
             result += q.top();
             q.pop();
